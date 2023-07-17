@@ -1,5 +1,5 @@
-import AccordionList from "./AccordionList.tsx";
 import { ChangeEvent, useCallback, useState } from "react";
+import AccordionList from "./AccordionList.tsx";
 import { IAccordion } from "../../models/IAccordion.ts";
 import { ACCORDION } from "../../data/accordion.ts";
 
@@ -9,7 +9,6 @@ const AccordionListWrapper = () => {
 
   const handleOpenItem = useCallback((id: number) => {
     setAccordionData((prevState: IAccordion[]) => {
-      console.log(prevState);
       return prevState.map((item: IAccordion): IAccordion => {
         return item.id === id
           ? { ...item, isOpened: !item.isOpened }

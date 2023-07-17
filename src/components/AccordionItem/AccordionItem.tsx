@@ -16,7 +16,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   children,
   handleOpenItem
 }) => {
-  const { id, isOpened, title }: Omit<IAccordion, "children"> = accordionItem;
+  const { id, isOpened, title } = accordionItem;
   return (
     <AccordionItemWrapper>
       <AccordionItemData onClick={() => handleOpenItem(id)}>
