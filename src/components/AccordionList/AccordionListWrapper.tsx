@@ -9,7 +9,7 @@ const AccordionListWrapper = () => {
 
   const handleOpenItem = useCallback((id: number) => {
     setAccordionData((prevState: IAccordion[]) => {
-      return prevState.map((item: IAccordion): IAccordion => {
+      return prevState.map((item: IAccordion) => {
         return item.id === id
           ? { ...item, isOpened: !item.isOpened }
           : item.children.length > 0
@@ -19,23 +19,27 @@ const AccordionListWrapper = () => {
     });
   }, []);
 
-  const handleOpenChild = useCallback((id: number, accordion: IAccordion[]) => {
-    return accordion.map((item: IAccordion): IAccordion => {
-      return item.id === id
-        ? { ...item, isOpened: !item.isOpened }
-        : item.children.length > 0
-        ? { ...item, children: handleOpenChild(id, item.children) }
-        : item;
-    });
-  }, []);
+  const handleOpenChild = useCallback(
+    (id: number, accordion: IAccordion[]): IAccordion[] => {
+      return accordion.map((item: IAccordion) => {
+        return item.id === id
+          ? { ...item, isOpened: !item.isOpened }
+          : item.children.length
+          ? { ...item, children: handleOpenChild(id, item.children) }
+          : item;
+      });
+    },
+    []
+  );
 
   const searchForTitle = useCallback(
     (accordion: IAccordion[], targetTitle: string, id = -1): IAccordion[] => {
-      return accordion.map((item: IAccordion): IAccordion => {
-        item.title.toLowerCase().includes(targetTitle.toLowerCase()) ||
-        id === item.id
-          ? (id = item.id)
-          : id;
+      return accordion.map((item: IAccordion) => {
+        if (
+          item.title.toLowerCase().includes(targetTitle.toLowerCase()) ||
+          id === item.id
+        )
+          id = item.id;
 
         const updatedChildren: IAccordion[] = searchForTitle(
           item.children,
@@ -45,7 +49,7 @@ const AccordionListWrapper = () => {
 
         const shouldBeOpened: boolean =
           id === item.id ||
-          updatedChildren.some((item: IAccordion) => item.isOpened === true);
+          updatedChildren.some((item: IAccordion) => item.isOpened);
 
         return { ...item, isOpened: shouldBeOpened, children: updatedChildren };
       });
@@ -63,7 +67,11 @@ const AccordionListWrapper = () => {
 
   return (
     <>
-      <input value={searchFilter} onChange={handleSearchTitle} />
+      <input
+        value={searchFilter}
+        onChange={handleSearchTitle}
+        placeholder={"search"}
+      />
       <AccordionList
         accordionData={accordionData}
         handleOpenItem={handleOpenItem}
