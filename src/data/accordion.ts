@@ -12,15 +12,15 @@ export const ACCORDION: IAccordion[] = [
     title: "common_title2",
     children: [
       {
-        id: 2,
+        id: 4,
         title: "rare_title2",
         children: [
           {
-            id: 4,
+            id: 5,
             title: "rare_title4",
             children: [
               {
-                id: 5,
+                id: 6,
                 title: "rare_title5",
                 children: [],
                 isOpened: false

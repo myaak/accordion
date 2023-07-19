@@ -1,22 +1,17 @@
 import { IAccordion } from "../../models/IAccordion.ts";
-import {
-  AccordionItemData,
-  AccordionItemWrapper
-} from "./AccordionItem.styled.ts";
+import { AccordionItemData, AccordionItemWrapper } from "./AccordionItem.styled.ts";
 import { AccordionListUl } from "../AccordionList/AccordionList.styled.ts";
 import React from "react";
+import { compareChildren } from "./AccordionItem.memo.ts";
 
 interface AccordionItemProps {
   accordionItem: IAccordion;
   children?: React.ReactNode;
   handleOpenItem: (id: number) => void;
 }
-const AccordionItem: React.FC<AccordionItemProps> = ({
-  accordionItem,
-  children,
-  handleOpenItem
-}) => {
+const AccordionItem: React.FC<AccordionItemProps> = ({ accordionItem, children, handleOpenItem }) => {
   const { id, isOpened, title } = accordionItem;
+
   return (
     <AccordionItemWrapper>
       <AccordionItemData onClick={() => handleOpenItem(id)}>
@@ -28,4 +23,8 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   );
 };
 
-export default React.memo(AccordionItem);
+export default React.memo(AccordionItem, (prevProps, nextProps) => {
+  if (prevProps.accordionItem.isOpened !== nextProps.accordionItem.isOpened) return false;
+
+  return compareChildren(prevProps.accordionItem.children, nextProps.accordionItem.children);
+});
