@@ -1,4 +1,4 @@
-import { IAccordion } from "../models/IAccordion.ts";
+import { IAccordion } from "../types/IAccordion.ts";
 
 export const ACCORDION: IAccordion[] = [
   {

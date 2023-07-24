@@ -1,5 +1,5 @@
 import React from "react";
-import { IAccordion } from "../../models/IAccordion.ts";
+import { IAccordion } from "../../types/IAccordion.ts";
 import AccordionItem from "../AccordionItem/AccordionItem.tsx";
 import { AccordionListUl } from "./AccordionList.styled.ts";
 
@@ -8,10 +8,7 @@ interface AccordionListProps {
   handleOpenItem: (id: number) => void;
 }
 
-const AccordionList: React.FC<AccordionListProps> = ({
-  accordionData,
-  handleOpenItem
-}) => {
+const AccordionList: React.FC<AccordionListProps> = ({ accordionData, handleOpenItem }) => {
   return (
     accordionData.length > 0 && (
       <AccordionListUl>
@@ -19,12 +16,7 @@ const AccordionList: React.FC<AccordionListProps> = ({
           <AccordionItem
             key={item.id}
             accordionItem={item}
-            children={
-              <AccordionList
-                accordionData={item.children}
-                handleOpenItem={handleOpenItem}
-              />
-            }
+            children={<AccordionList accordionData={item.children} handleOpenItem={handleOpenItem} />}
             handleOpenItem={handleOpenItem}
           />
         ))}
